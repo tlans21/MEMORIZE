@@ -1,73 +1,44 @@
 #include<iostream>
-#include<queue>
-#include<cstring>
+#include<algorithm>
 
 using namespace std;
+int n;
+int map[500][500];
+int j = 0;
+int MAX = 1000000000;
+bool visited[100][100];
+int dx[2] = {0, 1};
+int solution = 0;
 
-int T;
-char spell[4] = {'D','S','L','R'};
-int N;
-int M;
-int visited[10001];
-
-int dslr(int order, int n){
-    if(order == 0){
-        return (n * 2) % 10000;
+void dfs(int y, int x, int depth, int sum){
+    
+    if(depth == n){
+       solution = max(sum, solution);
     }
-   else if(order == 1){
-       if(n == 0){
-           return 9999;
-       }else{
-           return n - 1;
-       }
-   }
-   else if(order == 2){
-       int minus = n / 1000;
-       n -=minus*1000;
-       n *=10;
-       n +=minus;
-       return n;
-   }
-   else if(order == 3){
-       int plus = n % 10;
-       n /= 10;
-       n += plus *1000;
-       return n;
-   }
-}
 
-void bfs(){
-    queue<pair<int, string>> q;
-    q.push({N,""});
-    visited[N] = 0;
-    while(!q.empty()){
-        int x = q.front().first;
-        string a = q.front().second;
-        q.pop();
+    for(int i = 0; i < 2; i++){
+            int ny = y+1;           //오른쪽과 왼쪽으로 가는 경우
+            int nx = x + dx[i];
 
-        if(x == M){
-            cout<<a<<"\n";
-            return;
+        if(ny < 0 || ny>=n || nx < 0 || nx>=n){
+            continue;
         }
-
-        for(int i = 0; i < 4; i++){
-            int nx = dslr(i, x);
-
-            if(visited[nx]){
-                continue;
-            }
-                q.push({nx,a+spell[i]});
-                visited[nx] = 1;
-        }
+        dfs(ny, nx, depth+1, sum + map[ny][nx]);
     }
 }
-
 
 int main(){
-    cin>>T;
-    while(T--){
-        memset(visited, 0, sizeof(visited));
-        cin >> N >> M;
-        bfs();
+
+    cin >> n;
+
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0;  j <= i; j++){
+            cin >> map[i][j];
+        }
     }
+    dfs(0, 0, 1, map[0][0]);
+
+    cout<<solution<<endl;
+ 
 }
