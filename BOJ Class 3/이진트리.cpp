@@ -1,83 +1,61 @@
-#include<iostream>
-#define null 0
+#include <iostream>
 
 using namespace std;
+int number = 15;
 
-template <typename T>
-class Tree;
+// 하나의 노드 정보를 선언합니다.
+typedef struct node *treePointer;
+typedef struct node {
+    string data;
+    treePointer leftchild;
+    treePointer rightchild;
+}node;
 
-template <typename T>
-class TreeNode{
-    friend class Tree<T>;
-private :
-T data;
-Tree Node* left;
-Tree Node* right;
-public :
-TreeNode(T data = 0, TreeNode* left = null, TreeNode* right = null){
-    this->data = data;
-    this->left = left;
-    this->right = right;
+//전위 순회
+
+void preorder(treePointer ptr){
+    if(ptr){
+        cout << ptr->data <<' ';
+        preorder(ptr->leftchild);
+        preorder(ptr->rightchild);
+    }
 }
-};
 
-template <typename T>
-class Tree{
-    private :
-    TreeNode<T>* root;
-    public:
-    Tree(T = data = 0){
-        root = new TreeNode<T>(data);
+//중위 순회
+void inorder(treePointer ptr){
+    if(ptr){
+        inorder(ptr->leftchild);
+        cout << ptr->data <<' ';
+        inorder(ptr->rightchild);
+    }
+}
+
+//후위 순회
+void postorder(treePointer ptr){
+    if(ptr){
+        postorder(ptr->leftchild);
+        postorder(ptr->rightchild);
+        cout << ptr->data <<' ';
+    }
+}
+
+int main(void){
+    cin >> number;
+
+    node nodes[number + 1];
+    for(int i = 1; i <= number; i++){
+        nodes[i].data = 'a' + i-1;
+        nodes[i].leftchild = NULL;
+        nodes[i].rightchild = NULL;
     }
 
-    void buildTree(){
-        root->left = new TreeNode<T>('B', new TreeNode<T>('D', new TreeNode<T>('H', )), TreeNode<T>('E', TreeNode<T>('I'), TreeNode<T>('J')));
-        root->right = new TreeNode<T>('C', new TreeNode<T>('F'), new TreeNode<T>('G', null, new TreeNode<T>('K')));
-    }
-    TreeNode<T>* getroot(){
-        return root;
-    }
-    void visit(TreeNode<T>* current){
-        cout<<current->data<<" ";
-    }
-
-    void preorder(TreeNode<T>* current){
-        if(current != null){
-            visit(current);
-            preorder(current->left);
-            preorder(current->right);
+    for(int i = 1; i <= number; i++){
+        if(i % 2 == 0){
+            nodes[i / 2].leftchild = &nodes[i];
+        }else{
+            nodes[i / 2].rightchild = &nodes[i];
         }
     }
-
-    void inorder(TreeNode<T>* current){
-        if(current != null){
-            inorder(current->left);
-            visit(current);
-            inorder(current->right);
-        }
-    }
-
-    void postorder(TreeNode<T>* current){
-        if(current != null){
-            postorder(current ->left);
-            postorder(current ->right);
-            visit(current);
-        }
-    }
-};
-
-int main(){
-    Tree<char> tree('A');
-    tree.buildTree();
-    cout << "Preorder";
-    tree.preorder(tree.getroot());
-    cout << endl;
-
-    cout<< "Inorder";
-    tree.inorder(tree.getroot());
-    cout << endl;
-
-    cout << "Postorder";
-    tree.postorder(tree.getroot());
-    cout<<endl;
+    preorder(&nodes[1]);
+    return 0;
 }
