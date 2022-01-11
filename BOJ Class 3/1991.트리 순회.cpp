@@ -42,6 +42,9 @@ void postorder(char root){
 int main(){
     cin>> N;
     for(int i = 1; i <= N; i++){
+         cin >> X >> Y >> Z;
+        parent[X - 'A'][0] = Y;
+        parent[X - 'A'][1] = Z;
     }
     preorder('A');
     cout<<'\n';
