@@ -31,14 +31,12 @@ int main(){
 
 
     for(int i = 2; i <= N; i++){
-        m1 = dp[1];
-        m2 = dp[2];
-        m3 = dp[3];
+      
 
         
-        dp[1] = arr1[i][1] + max(m1,m2);
-        dp[2] = arr1[i][2] + max({m1, m2, m3});
-        dp[3] = arr1[i][3] + max(m2, m3);
+        dp[1] = arr1[i][1] + max(dp[1],dp[2]);
+        dp[2] = arr1[i][2] + max({dp[1], dp[2], dp[3]});
+        dp[3] = arr1[i][3] + max(dp[1], dp[2]);
     }
     int solution = max({dp[1], dp[2], dp[3]});
     cout<<solution<<' ';
@@ -48,13 +46,10 @@ int main(){
 
 
     for(int i = 2; i <= N; i++){
-        m1 = dp2[1];
-        m2 = dp2[2];
-        m3 = dp2[3];
-
-        dp2[1] = arr1[i][1] + min(m1, m2);
-        dp2[2] = arr1[i][2] + min({m1, m2, m3});
-        dp2[3] = arr1[i][3] + min(m2, m3);
+      
+        dp2[1] = arr1[i][1] + min(dp2[1], dp2[2]);
+        dp2[2] = arr1[i][2] + min({dp2[1], dp2[2], dp2[3]});
+        dp2[3] = arr1[i][3] + min(dp[2], dp[3]);
     }
 
     
