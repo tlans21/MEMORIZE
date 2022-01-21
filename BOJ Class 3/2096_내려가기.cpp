@@ -40,7 +40,7 @@ int main(){
     }
     int solution = max({dp[1], dp[2], dp[3]});
     cout<<solution<<' ';
-     for(int i = 1; i <= 3; i++){
+     for(int i = 1; i <= 4; i++){
         dp2[i] = arr1[1][i];
     }
 
