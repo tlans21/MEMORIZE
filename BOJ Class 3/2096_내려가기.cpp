@@ -25,7 +25,7 @@ int main(){
         cin>>arr1[i][j];
         }
     }
-    for(int i = 1; i <= 3; i++){
+    for(int i = 1; i <= 4; i++){
         dp[i] = arr1[1][i];
     }
 
