@@ -9,7 +9,7 @@ int N;
 int K;
 int A;
 int first;
-int cnt2;
+int cnt2;9ikkkkkkk9ki
 
 int BFS(int X, int cnt){
  
