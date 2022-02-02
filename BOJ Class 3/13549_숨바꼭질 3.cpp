@@ -1,47 +1,51 @@
-#include<iostream>
-#include<queue>
+#include <iostream>
+#include <vector>
+#include <functional>
+#include <queue>
 
 using namespace std;
-int dx[2]= {-1, 1};
-queue<int> q;
+
 bool visited[100001];
-int N;
-int K;
-int A;
-int first;
-int cnt2;9ikkkkkkk9ki
 
-int BFS(int X, int cnt){
+
+int BFS(int X, int K){
  
-    queue<pair<int,int>> q;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
+    q.push(make_pair(0, X));
+    visited[X] = true;
+    
 
-    q.push({X, cnt});
     while(!q.empty()){
-        int cur = q.front().first;
-        int count = q.front().second;
+        int cur = q.top().second;
+        int count = q.top().first;
         q.pop();
-        visited[cur] = true;  // 1 -> (1+1) = 2 -> (2*2) = 4인 경우와 (1*1) = 2 - > (2*2)= 4인 경우의 값이 같은 경우.
-
-       
-
-        if(K == cur){
-           return count;        
+ 
+        if(cur == K){
+            return count;
         }
+
+        if(cur * 2 <= 100000 && !visited[cur * 2]){
+            visited[cur * 2] = true;
+            q.push(make_pair(count, cur * 2));
+        }
+
         if(cur + 1 <= 100000 && !visited[cur + 1]){
-            q.push({cur+1, count+1});
+            visited[cur+1] = true;
+            q.push(make_pair(count + 1, cur + 1));
         }
         if(cur - 1 >= 0 && !visited[cur - 1]){
-            q.push({cur-1, count+1});
+            visited[cur -1] = true;
+            q.push(make_pair(count + 1, cur - 1));
         }
-        if(cur * 2 <= 100000 && !visited[2 * cur]){
-            q.push({cur * 2, count});
-        }
-        }
-    }
+    }     
+}
 
 
-int main(){
+int main(void){
+    int N;
+    int K;
     cin>>N>>K;
 
-    cout<<BFS(N, 0)<<endl;
+    cout<<BFS(N, K)<<endl;
+    return 0;
 }
