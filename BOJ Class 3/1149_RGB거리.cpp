@@ -14,7 +14,7 @@ int main(){
     map[0][2] = 0;
     map[0][0] = 0;
 
-    //
+
     for(int i = 1; i <= N; i++){
         cin >> cost[0] >> cost[1] >> cost[2];
         map[i][0] = min(map[i-1][1], map[i-1][2]) + cost[0];
