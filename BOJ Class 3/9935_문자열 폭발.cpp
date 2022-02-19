@@ -11,7 +11,7 @@ int main(){
     for(int i = 1; i <= N-1; i++){
         int x;
         int y;
-        int z;
+        int z;  
         cin>>x>>y>>z;
         map[x][y] = z;
         map[y][x] = z;
